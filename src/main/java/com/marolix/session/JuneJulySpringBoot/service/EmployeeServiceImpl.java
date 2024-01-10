@@ -1,24 +1,43 @@
 package com.marolix.session.JuneJulySpringBoot.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.marolix.session.JuneJulySpringBoot.dto.EmployeeDTO;
 import com.marolix.session.JuneJulySpringBoot.entity.Employee;
 import com.marolix.session.JuneJulySpringBoot.repository.EmployeeRepository;
 
 @Service(value = "empServiceImpl")
+@Transactional
 public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
 	@Override
-	public String addEmployee(Employee emp) {
-		employeeRepository.save(emp);
-		return "emp added successfully";
+
+	public String addEmployee(EmployeeDTO emp) throws Exception {
+
+		Employee e = employeeRepository.findByPhoneNumber(emp.getPhoneNumber());
+		if (e != null) {
+			// throws new RuntimeException("phone number already registered " +
+			// emp.getPhoneNumber());
+
+		}
+		Employee newEntity = new Employee(emp.getEmpName(), emp.getDesignation(), emp.getSalary(), emp.getPhoneNumber(),
+				emp.getEmail(), emp.getDoj());
+
+		employeeRepository.save(newEntity);
+
+		// throw new Exception("generated exception after invoking save");
+
+		return "";
 	}
 
 	@Override
@@ -49,6 +68,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public void deleteAllEmployeeData() {
 		employeeRepository.deleteAll();
 		System.out.println("all employees deleted");
+	}
+
+	@Override
+	public List<Employee> searchByDesignation(String designation) {
+		return employeeRepository.findByDesignation(designation);
+
+	}
+
+	@Override
+	public List<EmployeeDTO> filterEmployeesBySalarayRange(Double minSalaray, Double maxSalaray) {
+		List<Employee> repoEmployees = employeeRepository.findEmployeesDataBetweenSalaraies(minSalaray,maxSalaray);
+		List<EmployeeDTO> dtos = repoEmployees.stream().map(e -> new EmployeeDTO(e.getEmpName(), e.getDesignation(),
+				e.getSalary(), e.getEmail(), e.getPhoneNumber(), e.getDoj())).collect(Collectors.toList());
+		if (dtos.isEmpty())
+			throw new RuntimeException(
+					String.format("no employees found in the provided range (%f - %f) ", minSalaray, maxSalaray));
+		return dtos;
 	}
 
 }

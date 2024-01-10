@@ -12,15 +12,17 @@ import com.marolix.session.JuneJulySpringBoot.controller.EmployeeController;
 //CpmponentScan
 public class JuneJulySpringBootApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Throwable {
 		ConfigurableApplicationContext context = SpringApplication.run(JuneJulySpringBootApplication.class, args);
 		EmployeeController ec = context.getBean(EmployeeController.class);
 
-		 ec.addEmployee();
+		// ec.addEmployee();
 		// ec.viewAllEmployees();
 		// ec.viewEmployee();
 		// ec.deleEMployeeWithEMpID();
-		//ec.deleteAllEMployees();
+		// ec.deleteAllEMployees();
+		// ec.searchByDesignation();
+		ec.filterEmployessBySalrayRange();
 	}
 
 }
