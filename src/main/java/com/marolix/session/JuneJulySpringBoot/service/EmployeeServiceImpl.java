@@ -78,13 +78,36 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public List<EmployeeDTO> filterEmployeesBySalarayRange(Double minSalaray, Double maxSalaray) {
-		List<Employee> repoEmployees = employeeRepository.findEmployeesDataBetweenSalaraies(minSalaray,maxSalaray);
+		List<Employee> repoEmployees = employeeRepository.findEmployeesDataBetweenSalaraies(minSalaray, maxSalaray);
 		List<EmployeeDTO> dtos = repoEmployees.stream().map(e -> new EmployeeDTO(e.getEmpName(), e.getDesignation(),
 				e.getSalary(), e.getEmail(), e.getPhoneNumber(), e.getDoj())).collect(Collectors.toList());
 		if (dtos.isEmpty())
 			throw new RuntimeException(
 					String.format("no employees found in the provided range (%f - %f) ", minSalaray, maxSalaray));
 		return dtos;
+	}
+
+	@Override
+	public List<EmployeeDTO> filterByDOJ(LocalDate date) {
+		List<Employee> repoEmployees = employeeRepository.findByDoj1(date);
+		List<EmployeeDTO> dtos = repoEmployees.stream().map(e -> new EmployeeDTO(e.getEmpName(), e.getDesignation(),
+				e.getSalary(), e.getEmail(), e.getPhoneNumber(), e.getDoj())).collect(Collectors.toList());
+		if (dtos.isEmpty())
+			throw new RuntimeException(String.format("no employees found in the provided date %s ", date));
+		return dtos;
+	}
+
+	@Override
+	public List<Employee> fetchSpecifiedColumns() {
+		// TODO Auto-generated method stub
+		return employeeRepository.fetchOnlySpecifiedColumns();
+	}
+
+	@Override
+	public String updateEmployees(Double currentSalaray,Double increment) {
+		// TODO Auto-generated method stub
+		employeeRepository.updateEmployeeSalaray(currentSalaray,increment);
+		return "employees salaries updated succesfully";
 	}
 
 }

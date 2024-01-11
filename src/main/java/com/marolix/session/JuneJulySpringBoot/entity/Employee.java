@@ -27,6 +27,7 @@ public class Employee {
 	private String email;
 	private LocalDate doj;
 
+	
 	public Employee(Long employeeId, String empName, String designation, Double salary, String phoneNumber,
 			String email, LocalDate doj) {
 		super();
@@ -42,6 +43,12 @@ public class Employee {
 	public Employee() {
 		super();
 
+	}
+
+	public Employee(String empName, Double salary) {
+		super();
+		this.empName = empName;
+		this.salary = salary;
 	}
 
 	public Employee(String empName, String designation, Double salary, String phoneNumber, String email,

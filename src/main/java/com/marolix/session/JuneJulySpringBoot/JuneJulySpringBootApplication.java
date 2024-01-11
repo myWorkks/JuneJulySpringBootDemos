@@ -22,7 +22,11 @@ public class JuneJulySpringBootApplication {
 		// ec.deleEMployeeWithEMpID();
 		// ec.deleteAllEMployees();
 		// ec.searchByDesignation();
-		ec.filterEmployessBySalrayRange();
+		// ec.filterEmployessBySalrayRange();
+		// ec.filterByDoj();
+		// ec.fectchSpecifiedColumns();
+		// ec.updateEMployeeSalaray();
+		ec.addBankDetails();
 	}
 
 }
