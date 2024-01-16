@@ -10,10 +10,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.marolix.session.JuneJulySpringBoot.dto.EmpAddressDTO;
 import com.marolix.session.JuneJulySpringBoot.dto.EmployeeDTO;
 import com.marolix.session.JuneJulySpringBoot.dto.SalaryAccountDTO;
 import com.marolix.session.JuneJulySpringBoot.entity.Employee;
 import com.marolix.session.JuneJulySpringBoot.exception.EmployeeManagementException;
+import com.marolix.session.JuneJulySpringBoot.service.EmployeeAddressService;
 import com.marolix.session.JuneJulySpringBoot.service.EmployeeService;
 import com.marolix.session.JuneJulySpringBoot.service.SalaryAccountService;
 
@@ -24,6 +26,8 @@ public class EmployeeController {
 	private EmployeeService empService;
 	@Autowired
 	private SalaryAccountService salaryAccountService;
+	@Autowired
+	private EmployeeAddressService employeeAddressService;
 
 	public void addEmployee() throws Throwable {
 
@@ -147,5 +151,29 @@ public class EmployeeController {
 		String msg = salaryAccountService.addBankDetails(sadto);
 		logger.info(msg);
 
+	}
+
+	public void addAddress() throws EmployeeManagementException {
+		System.out.println("enter address details");
+		Scanner sc = new Scanner(System.in);
+		System.out.println("enter hno");
+		String hno = sc.next();
+		System.out.println("enter street");
+		String street = sc.next();
+		System.out.println("enter city");
+		String city = sc.next();
+		System.out.println("enter state");
+		String state = sc.next();
+		System.out.println("enter pincode");
+		String pincode = sc.next();
+
+		EmpAddressDTO empAddressDTO = new EmpAddressDTO(hno, street, city, state, pincode);
+
+		System.out.println("employee id");
+		Long empId = sc.nextLong();
+		// Long->Integer
+		// int->long //implicit
+		// long->int //explict
+		employeeAddressService.addEmpAddress(empId.intValue(), empAddressDTO);
 	}
 }

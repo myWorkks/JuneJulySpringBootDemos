@@ -25,9 +25,9 @@ public class Employee {
 	private String phoneNumber;
 	@Column(nullable = false)
 	private String email;
+	@Column
 	private LocalDate doj;
 
-	
 	public Employee(Long employeeId, String empName, String designation, Double salary, String phoneNumber,
 			String email, LocalDate doj) {
 		super();
