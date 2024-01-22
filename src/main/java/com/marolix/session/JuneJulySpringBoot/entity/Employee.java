@@ -1,12 +1,16 @@
 package com.marolix.session.JuneJulySpringBoot.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +31,12 @@ public class Employee {
 	private String email;
 	@Column
 	private LocalDate doj;
+
+	// one to many unidirectional
+
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "emp_id", updatable = false,nullable=false)
+	private List<EmployeeAddress> employeeAddresses;
 
 	public Employee(Long employeeId, String empName, String designation, Double salary, String phoneNumber,
 			String email, LocalDate doj) {
@@ -60,12 +70,6 @@ public class Employee {
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.doj = doj;
-	}
-
-	@Override
-	public String toString() {
-		return "Employee [employeeId=" + employeeId + ", empName=" + empName + ", designation=" + designation
-				+ ", salary=" + salary + ", phoneNumber=" + phoneNumber + ", email=" + email + ", doj=" + doj + "]";
 	}
 
 	public Long getEmployeeId() {
@@ -122,6 +126,21 @@ public class Employee {
 
 	public void setDoj(LocalDate doj) {
 		this.doj = doj;
+	}
+
+	public List<EmployeeAddress> getEmployeeAddresses() {
+		return employeeAddresses;
+	}
+
+	public void setEmployeeAddresses(List<EmployeeAddress> employeeAddresses) {
+		this.employeeAddresses = employeeAddresses;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [employeeId=" + employeeId + ", empName=" + empName + ", designation=" + designation
+				+ ", salary=" + salary + ", phoneNumber=" + phoneNumber + ", email=" + email + ", doj=" + doj
+				+ ", employeeAddresses=" + employeeAddresses + "]";
 	}
 
 }

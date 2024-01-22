@@ -16,7 +16,7 @@ public class JuneJulySpringBootApplication {
 		ConfigurableApplicationContext context = SpringApplication.run(JuneJulySpringBootApplication.class, args);
 		EmployeeController ec = context.getBean(EmployeeController.class);
 
-//	ec.addEmployee();
+		// ec.addEmployee();
 		// ec.viewAllEmployees();
 		// ec.viewEmployee();
 		// ec.deleEMployeeWithEMpID();
@@ -27,7 +27,10 @@ public class JuneJulySpringBootApplication {
 		// ec.fectchSpecifiedColumns();
 		// ec.updateEMployeeSalaray();
 		// ec.addBankDetails();
-		ec.addAddress();
+		// ec.addAddress();
+		// ec.sortBySalary();
+		// ec.sortBySpecificColumn();
+		// ec.fetchByPaging();
 	}
 
 }

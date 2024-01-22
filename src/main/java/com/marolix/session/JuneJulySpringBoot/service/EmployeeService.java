@@ -28,4 +28,12 @@ public interface EmployeeService {
 	public List<Employee> fetchSpecifiedColumns();
 
 	public String updateEmployees(Double currentSalaray,Double increment);
+	
+	public List<EmployeeDTO> sortBySlaray();
+	
+	public List<EmployeeDTO> sortBySpecific(String columnName);
+	
+	
+	public List<EmployeeDTO> fetchByPaging(Integer pgNo,Integer pgSize);
+	
 }

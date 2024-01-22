@@ -7,6 +7,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -104,10 +108,45 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public String updateEmployees(Double currentSalaray,Double increment) {
+	public String updateEmployees(Double currentSalaray, Double increment) {
 		// TODO Auto-generated method stub
-		employeeRepository.updateEmployeeSalaray(currentSalaray,increment);
+		employeeRepository.updateEmployeeSalaray(currentSalaray, increment);
 		return "employees salaries updated succesfully";
+	}
+
+	@Override
+	public List<EmployeeDTO> sortBySlaray() {
+		List<Employee> repoEmployees = employeeRepository.findByOrderBySalary();
+		List<EmployeeDTO> dtos = repoEmployees.stream().map(e -> new EmployeeDTO(e.getEmpName(), e.getDesignation(),
+				e.getSalary(), e.getEmail(), e.getPhoneNumber(), e.getDoj())).collect(Collectors.toList());
+		if (dtos.isEmpty())
+			throw new RuntimeException(String.format("no employees found  "));
+		return dtos;
+	}
+
+	@Override
+	public List<EmployeeDTO> sortBySpecific(String columnName) {
+		Sort sort = Sort.by(columnName).and(Sort.by("email").descending());
+		List<Employee> repoEmp = employeeRepository.findAll(sort);
+		List<EmployeeDTO> dtos = repoEmp.stream().map(e -> new EmployeeDTO(e.getEmpName(), e.getDesignation(),
+				e.getSalary(), e.getEmail(), e.getPhoneNumber(), e.getDoj())).collect(Collectors.toList());
+		if (dtos.isEmpty())
+			throw new RuntimeException(String.format("no employees found  "));
+		return dtos;
+	}
+
+	@Override
+	public List<EmployeeDTO> fetchByPaging(Integer pgNo, Integer pgSize) {
+
+		Pageable pageable = PageRequest.of(pgNo, pgSize);
+		Page<Employee> page = employeeRepository.findAll(pageable);
+		if (page.hasContent())
+			return page.getContent().stream().map(e -> new EmployeeDTO(e.getEmpName(), e.getDesignation(),
+					e.getSalary(), e.getEmail(), e.getPhoneNumber(), e.getDoj())).collect(Collectors.toList());
+
+		else
+
+			throw new RuntimeException(String.format("no employees found  "));
 	}
 
 }

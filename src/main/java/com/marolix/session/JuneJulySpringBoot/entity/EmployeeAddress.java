@@ -22,9 +22,9 @@ public class EmployeeAddress {
 	private String pincode;
 // many to one relation ship
 	//unidirerional 
-	@ManyToOne
-	@JoinColumn(name = "emp_id", nullable = false, updatable = true)
-	private Employee employee;
+//	@ManyToOne
+//	@JoinColumn(name = "emp_id", nullable = false, updatable = true)
+//	private Employee employee;
 
 	public Long getAddressId() {
 		return addressId;
@@ -74,18 +74,20 @@ public class EmployeeAddress {
 		this.pincode = pincode;
 	}
 
-	public Employee getEmployee() {
-		return employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
 	@Override
 	public String toString() {
 		return "EmployeeAddress [addressId=" + addressId + ", hno=" + hno + ", street=" + street + ", city=" + city
-				+ ", state=" + state + ", pincode=" + pincode + ", employee=" + employee + "]";
+				+ ", state=" + state + ", pincode=" + pincode + "]";
 	}
+
+//	public Employee getEmployee() {
+//		return employee;
+//	}
+//
+//	public void setEmployee(Employee employee) {
+//		this.employee = employee;
+//	}
+
+	
 
 }

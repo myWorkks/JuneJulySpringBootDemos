@@ -1,5 +1,7 @@
 package com.marolix.session.JuneJulySpringBoot.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +36,18 @@ public class EmployeeAddressServiceImpl implements EmployeeAddressService {
 		empAddress.setCity(dto.getCity());
 		empAddress.setState(dto.getState());
 		empAddress.setPincode(dto.getPincode());
-	//	emp.setEmployeeId(null);
-		empAddress.setEmployee(emp);
+		// emp.setEmployeeId(null);
+		// empAddress.setEmployee(emp);
 
-		return employeeAddressRepository.save(empAddress).getAddressId().toString();
+//		return employeeAddressRepository.save(empAddress).getAddressId().toString();
+
+		List<EmployeeAddress> adList = new ArrayList<EmployeeAddress>();
+
+		adList.add(empAddress);
+
+		emp.setEmployeeAddresses(adList);
+
+		return employeeRepository.save(emp).getEmployeeAddresses().get(0).getAddressId().toString();
 	}
 
 }

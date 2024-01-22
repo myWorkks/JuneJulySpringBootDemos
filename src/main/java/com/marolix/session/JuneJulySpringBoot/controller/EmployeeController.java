@@ -176,4 +176,25 @@ public class EmployeeController {
 		// long->int //explict
 		employeeAddressService.addEmpAddress(empId.intValue(), empAddressDTO);
 	}
+
+	public void sortBySalary() {
+		empService.sortBySlaray().forEach(e -> System.out.println(e));
+	}
+
+	public void sortBySpecificColumn() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("enter the sorting column name");
+		String colname = sc.next();
+		empService.sortBySpecific(colname).forEach(e -> System.out.println(e));
+	}
+
+	public void fetchByPaging() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("enter page no");
+		int pgNo = sc.nextInt();
+		System.out.println("enter no of entities per page");
+		int noOfEntities = sc.nextInt();
+
+		empService.fetchByPaging(pgNo, noOfEntities).forEach(e -> System.out.println(e));
+	}
 }
