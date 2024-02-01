@@ -1,5 +1,7 @@
 package com.marolix.session.JuneJulySpringBoot.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -17,8 +19,18 @@ public class SalaryAccountDTO {
 	private String ifsc;
 	private String branch;
 	private Long empId;
+	private MultipartFile passbook;
 	
-	
+	public MultipartFile getPassbook() {
+		return passbook;
+	}
+
+
+	public void setPassbook(MultipartFile passbook) {
+		this.passbook = passbook;
+	}
+
+
 	public SalaryAccountDTO(String accountNumber, String accountHolderName, String ifsc, String branch, Long empId) {
 		super();
 		this.accountNumber = accountNumber;

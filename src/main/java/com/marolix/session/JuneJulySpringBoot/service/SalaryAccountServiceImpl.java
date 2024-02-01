@@ -1,5 +1,6 @@
 package com.marolix.session.JuneJulySpringBoot.service;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class SalaryAccountServiceImpl implements SalaryAccountService {
 
 	@Override
 	@Transactional
-	public String addBankDetails(SalaryAccountDTO dto) throws EmployeeManagementException {
+	public String addBankDetails(SalaryAccountDTO dto) throws EmployeeManagementException, IOException {
 		;
 
 		Optional<Employee> optEmp = employeeRepository.findById(dto.getEmpId());
@@ -37,6 +38,8 @@ public class SalaryAccountServiceImpl implements SalaryAccountService {
 		newSalaryAccount.setIFSC(dto.getIfsc());
 		newSalaryAccount.setBranch(dto.getBranch());
 		// all values except actId
+byte[] bytes=		dto.getPassbook().getBytes();
+		newSalaryAccount.setPassbookImage(bytes);
 		newSalaryAccount.setEmployee(emp);
 		SalaryAccount sa = salaryAccountRepository.save(newSalaryAccount);
 		return "account added successfully with id " + sa.getAcId() + "for emp id " + dto.getEmpId();

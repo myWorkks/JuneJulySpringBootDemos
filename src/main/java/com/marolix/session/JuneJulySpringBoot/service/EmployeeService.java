@@ -7,9 +7,10 @@ import org.springframework.cglib.core.Local;
 
 import com.marolix.session.JuneJulySpringBoot.dto.EmployeeDTO;
 import com.marolix.session.JuneJulySpringBoot.entity.Employee;
+import com.marolix.session.JuneJulySpringBoot.exception.EmployeeManagementException;
 
 public interface EmployeeService {
-	public String addEmployee(EmployeeDTO emp) throws Throwable;
+	public String addEmployee(EmployeeDTO emp) throws EmployeeManagementException;
 
 	public List<Employee> viewAllEmployees();
 

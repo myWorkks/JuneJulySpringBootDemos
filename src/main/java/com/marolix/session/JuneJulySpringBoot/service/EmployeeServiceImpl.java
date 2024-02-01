@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.marolix.session.JuneJulySpringBoot.dto.EmployeeDTO;
 import com.marolix.session.JuneJulySpringBoot.entity.Employee;
+import com.marolix.session.JuneJulySpringBoot.exception.EmployeeManagementException;
 import com.marolix.session.JuneJulySpringBoot.repository.EmployeeRepository;
 
 @Service(value = "empServiceImpl")
@@ -26,22 +27,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 
-	public String addEmployee(EmployeeDTO emp) throws Exception {
+	public String addEmployee(EmployeeDTO emp) throws EmployeeManagementException {
 
 		Employee e = employeeRepository.findByPhoneNumber(emp.getPhoneNumber());
 		if (e != null) {
-			// throws new RuntimeException("phone number already registered " +
-			// emp.getPhoneNumber());
+			 throw new EmployeeManagementException("phone number already registered " +
+			 emp.getPhoneNumber());
 
 		}
 		Employee newEntity = new Employee(emp.getEmpName(), emp.getDesignation(), emp.getSalary(), emp.getPhoneNumber(),
 				emp.getEmail(), emp.getDoj());
 
-		employeeRepository.save(newEntity);
+	e=	employeeRepository.save(newEntity);
 
 		// throw new Exception("generated exception after invoking save");
 
-		return "";
+		return "employee added successfully with empid "+e.getEmployeeId();
 	}
 
 	@Override
